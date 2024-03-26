@@ -58,7 +58,7 @@ def main():
             else:
                 COUNTER = 0
                 ALARM_ON =  False
-            cv2.putText(frame, "Ear {:.2f}".format(ear), (300, 10),
+            cv2.putText(frame, "Ear {:.2f}".format(ear), (250, 10),
                         cv2.FONT_HERSHEY_DUPLEX, 0.4, (255, 255,0), 1)
             cv2.imshow("Drowsiness Detection", frame)
             if cv2.waitKey(1) == ord('q'):
@@ -66,5 +66,5 @@ def main():
             video_capture.release()
             cv2.destroyAllWindows()
 
-        if __name__ == '__main__':
-            main()
+    if __name__ == '__main__':
+        main()
