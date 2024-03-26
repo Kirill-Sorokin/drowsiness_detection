@@ -11,6 +11,9 @@ EYE_AR_CONSEC_FRAME = 10
 COUNTER = 0
 ALARM_ON = False
 
+def sound_alarm(soundfile):
+    playsound.playsound(soundfile)
+
 def eye_aspect_ratio(eye):
     eyePointA = dist.euclidean(eye[1], eye[5])
     eyePointB = dist.euclidean(eye[2], eye[5])
@@ -40,3 +43,16 @@ def main():
                           (255, 255, 0), 1)
             cv2.polylines(frame, [rpst], True,
                           (255, 255, 0), 1)
+            
+            if ear < MIN_AER:
+                COUNTER += 1
+                if COUNTER >= EYE_AR_CONSEC_FRAME:
+                    if not ALARM_ON:
+                        ALARM_ON = True
+                        t = Thread(target = sound_alarm, args = ('alarm'))
+                cv2.putText(frame, "Alert: Drowsiness Detected!",
+                            (5, 10), cv2.FONT_HERSHEY_DUPLEX, 0.4,
+                            (255, 255, 0), 1)
+            else:
+                COUNTER = 0
+                ALARM_ON =  False
