@@ -49,10 +49,22 @@ def main():
                 if COUNTER >= EYE_AR_CONSEC_FRAME:
                     if not ALARM_ON:
                         ALARM_ON = True
-                        t = Thread(target = sound_alarm, args = ('alarm'))
+                        t = Thread(target = sound_alarm, args = ('drowsiness_alarm.wav'))
+                        t.daemon = True
+                        t.start()
                 cv2.putText(frame, "Alert: Drowsiness Detected!",
                             (5, 10), cv2.FONT_HERSHEY_DUPLEX, 0.4,
                             (255, 255, 0), 1)
             else:
                 COUNTER = 0
                 ALARM_ON =  False
+            cv2.putText(frame, "Ear {:.2f}".format(ear), (300, 10),
+                        cv2.FONT_HERSHEY_DUPLEX, 0.4, (255, 255,0), 1)
+            cv2.imshow("Drowsiness Detection", frame)
+            if cv2.waitKey(1) == ord('q'):
+                break
+            video_capture.release()
+            cv2.destroyAllWindows()
+
+        if __name__ == '__main__':
+            main()
